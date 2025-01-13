@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequestMapping("/franchise")
 public class FranchiseReactiveController {
@@ -19,7 +17,9 @@ public class FranchiseReactiveController {
     public FranchiseReactiveController(FranchiseReactiveService franchiseReactiveService) {
         this.franchiseReactiveService = franchiseReactiveService;
     }
-
+    /**
+     * Endpoint que nos permite crear una nueva franquicia
+     * */
     @PostMapping("/create")
     public Mono<ResponseEntity<FranchiseDTO>> save(@RequestBody FranchiseDTO franchiseDTO) {
         return franchiseReactiveService.save(franchiseDTO)
@@ -27,6 +27,9 @@ public class FranchiseReactiveController {
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
+    /**
+     * Endpoint que nos permite modificar el nombre de una franquicia
+     * */
     @PutMapping("/{id}/update-name")
     public Mono<ResponseEntity<String>> updateName(
             @PathVariable("id") Integer idFranchise,

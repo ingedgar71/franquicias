@@ -1,7 +1,5 @@
 package com.accenture.franquicias.dto;
 
-import org.springframework.data.relational.core.mapping.Column;
-
 public class BranchDTO {
     private Integer idBranch;
     private String branchName;

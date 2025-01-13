@@ -22,7 +22,9 @@ public class ProductReactiveController {
         this.productReactiveService = productReactiveService;
     }
 
-
+    /**
+     * Endpoint que nos permite crear un nuevo producto
+     * */
     @PostMapping("/create")
     public Mono<ResponseEntity<ProductDTO>> save(@RequestBody ProductDTO productDTO) {
         return productReactiveService.save(productDTO)
@@ -30,14 +32,18 @@ public class ProductReactiveController {
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
-
+    /**
+     * Endpoint que nos permite borrar un producto
+     * */
     @DeleteMapping("/delete/{id}")
     public Mono<ResponseEntity<Object>> delete(@PathVariable("id") Integer id) {
         return productReactiveService.delete(id)
                 .thenReturn(ResponseEntity.noContent().build())
                 .onErrorResume(e -> Mono.just(ResponseEntity.notFound().build()));
     }
-
+    /**
+     * Endpoint que nos permite modificar el stock de un producto
+     * */
     @PutMapping("/{id}/update-stock")
     public Mono<ResponseEntity<String>> updateStock(
             @PathVariable("id") Integer idProduct,
@@ -47,11 +53,18 @@ public class ProductReactiveController {
                 .onErrorResume(e -> Mono.just(ResponseEntity.badRequest().body(e.getMessage())));
     }
 
+    /**
+     * Endpoint que nos permite consultar cual es el producto que más stock tiene por sucursal
+     * para una franquicia especifica
+     * */
     @GetMapping("/top-stock/{idFranchise}")
     public Flux<ProductProjection> getTopStockByBranchForFranchise(@PathVariable Integer idFranchise) {
         return productReactiveService.getTopStockByBranchForFranchise(idFranchise);
     }
 
+    /**
+     * Endpoint que nos permite modificar el nombre de un producto
+     * */
     @PutMapping("/{id}/update-name")
     public Mono<ResponseEntity<String>> updateName(
             @PathVariable("id") Integer idProduct,
@@ -60,8 +73,5 @@ public class ProductReactiveController {
                 .map(rowsAffected -> ResponseEntity.ok("Name actualizado correctamente."))
                 .onErrorResume(e -> Mono.just(ResponseEntity.badRequest().body(e.getMessage())));
     }
-
-
-
 
 }
