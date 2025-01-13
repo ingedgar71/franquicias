@@ -68,7 +68,7 @@ Ejemplo desde Postman:
 Url: http://localhost:8080/product/create
 Body de la petición
 {
-	"name": "producto 3",
+	"productName": "producto 3",
     "stock": 27,
     "idBranch": 1
 }
